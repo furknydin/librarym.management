@@ -1,0 +1,28 @@
+spring:
+  application:
+    name : demo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: test
+    password: test
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  logging:
+    level:
+      root: ERROR
+      net:
+        shahto: DEBUG
+      org:
+        hibernate:
+          cache : DEBUG
