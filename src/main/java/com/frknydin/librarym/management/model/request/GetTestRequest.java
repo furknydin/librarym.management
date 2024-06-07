@@ -1,10 +1,10 @@
-package com.frknydin.librarym.management.response;
+package com.frknydin.librarym.management.model.request;
 
-public class GetTestResponse {
+public class GetTestRequest {
     private String name;
     private Long id;
 
-    public GetTestResponse(String name, Long id) {
+    public GetTestRequest(String name, Long id) {
         this.name = name;
         this.id = id;
     }

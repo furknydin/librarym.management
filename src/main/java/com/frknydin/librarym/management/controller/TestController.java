@@ -1,7 +1,7 @@
 package com.frknydin.librarym.management.controller;
 
-import com.frknydin.librarym.management.request.GetTestRequest;
-import com.frknydin.librarym.management.response.GetTestResponse;
+import com.frknydin.librarym.management.model.request.GetTestRequest;
+import com.frknydin.librarym.management.model.response.GetTestResponse;
 import com.frknydin.librarym.management.service.TestService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
