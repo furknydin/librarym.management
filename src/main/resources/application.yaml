@@ -26,3 +26,10 @@ spring:
       org:
         hibernate:
           cache : DEBUG
+
+  flyway:
+    user: test
+    password: test
+
+kafka:
+  brokers: localhost:29092
