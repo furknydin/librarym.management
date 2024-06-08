@@ -1,23 +1,3 @@
-DROP TABLE IF EXISTS book CASCADE;
-DROP TABLE IF EXISTS author;
-
-CREATE TABLE author
-(
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255)
-);
-
-CREATE TABLE book
-(
-    id SERIAL PRIMARY KEY,
-    isbn VARCHAR(255),
-    publisher VARCHAR(255),
-    title VARCHAR(255),
-    author_id BIGINT,
-    CONSTRAINT book_author_fk FOREIGN KEY (author_id) REFERENCES author (id)
-);
-
 INSERT INTO author (first_name, last_name) VALUES ('Craig', 'Walls');
 
 INSERT INTO book (isbn, publisher, title, author_id) VALUES (
@@ -41,6 +21,7 @@ INSERT INTO book (isbn, publisher, title, author_id) VALUES (
     (SELECT id FROM author WHERE first_name = 'Craig' AND last_name = 'Walls')
 );
 
+-- Author: Eric Evans
 INSERT INTO author (first_name, last_name) VALUES ('Eric', 'Evans');
 
 INSERT INTO book (isbn, publisher, title, author_id) VALUES (
@@ -50,6 +31,7 @@ INSERT INTO book (isbn, publisher, title, author_id) VALUES (
     (SELECT id FROM author WHERE first_name = 'Eric' AND last_name = 'Evans')
 );
 
+-- Author: Robert Martin
 INSERT INTO author (first_name, last_name) VALUES ('Robert', 'Martin');
 
 INSERT INTO book (isbn, publisher, title, author_id) VALUES (

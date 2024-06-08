@@ -28,6 +28,7 @@ spring:
           cache : DEBUG
 
   flyway:
+    baseline-on-migrate: true
     user: test
     password: test
 
