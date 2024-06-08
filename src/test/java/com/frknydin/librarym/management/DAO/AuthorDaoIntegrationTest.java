@@ -1,4 +1,4 @@
-package com.frknydin.librarym.management;
+package com.frknydin.librarym.management.DAO;
 
 
 import com.frknydin.librarym.management.DAO.author.AuthorDao;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DataJpaTest
 @Import(AuthorDaoImpl.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class DaoIntegrationTest {
+public class AuthorDaoIntegrationTest {
     @Autowired
     AuthorDao authorDao;
 
