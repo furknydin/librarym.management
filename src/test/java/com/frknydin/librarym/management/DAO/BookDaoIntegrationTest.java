@@ -3,12 +3,15 @@ package com.frknydin.librarym.management.DAO;
 import com.frknydin.librarym.management.DAO.book.BookDao;
 import com.frknydin.librarym.management.DAO.book.BookDaoImpl;
 import com.frknydin.librarym.management.model.entity.Book;
+import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -18,6 +21,39 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class BookDaoIntegrationTest {
     @Autowired
     BookDao bookDao;
+    @Test
+    void findBookByTitleNative() {
+        Book book = bookDao.findBookByTitleNative("Clean Code");
+
+        assertThat(book).isNotNull();
+    }
+
+    @Test
+    void findBookByTitleCriteria() {
+        Book book = bookDao.findBookByTitleCriteria("Clean Code");
+
+        assertThat(book).isNotNull();
+    }
+
+    @Test
+    void testFindAllBook() {
+        List<Book> books = bookDao.findAll();
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(0);
+    }
+
+    @Test
+    void testFindBookByISBN() {
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("ISBN Test");
+
+        Book saved = bookDao.saveNewBook(book);
+
+        Book fetched = bookDao.findBookByIsbn(book.getIsbn());
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     void testDeleteBook() {

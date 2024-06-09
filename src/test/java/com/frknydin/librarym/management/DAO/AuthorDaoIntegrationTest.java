@@ -10,8 +10,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @Import(AuthorDaoImpl.class)
@@ -19,6 +20,34 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class AuthorDaoIntegrationTest {
     @Autowired
     AuthorDao authorDao;
+
+    @Test
+    void testGetAuthorByNameNative() {
+        Author author = authorDao.findAuthorByNameNative("Craig","Walls");
+        assertThat(author).isNotNull();
+    }
+
+    @Test
+    void testGetAuthorByNameCriteria() {
+        Author author = authorDao.findAuthorByNameCriteria("Craig","Walls");
+        assertThat(author).isNotNull();
+    }
+
+    @Test
+    void testAuthorFindAll () {
+        List<Author> authors = authorDao.findAll();
+
+        assertThat(authors).isNotNull();
+        assertThat(authors.size()).isGreaterThan(0);
+    }
+
+    @Test
+    void testListAuthorsByLastNameLike(){
+        List<Author> authors = authorDao.listAuthorByLastNameList("Wall");
+
+        assertThat(authors).isNotNull();
+        assertThat(authors.size()).isGreaterThan(0);
+    }
 
     @Test
     void testDeleteAuthor() {

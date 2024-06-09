@@ -2,10 +2,11 @@ package com.frknydin.librarym.management.DAO.book;
 
 import com.frknydin.librarym.management.model.entity.Author;
 import com.frknydin.librarym.management.model.entity.Book;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
+import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class BookDaoImpl implements BookDao{
@@ -13,6 +14,63 @@ public class BookDaoImpl implements BookDao{
 
     public BookDaoImpl(EntityManagerFactory emf) {
         this.emf = emf;
+    }
+
+    @Override
+    public Book findBookByTitleNative(String title) {
+        try (EntityManager em = getEntityManager()) {
+            Query query = em.createNativeQuery("SELECT * FROM book b WHERE b.title = :title", Book.class);
+            query.setParameter("title",title);
+
+            return (Book) query.getSingleResult();
+        }
+    }
+
+    @Override
+    public Book findBookByTitleCriteria(String title) {
+        try (EntityManager em = getEntityManager()) {
+            CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+            CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+
+            Root<Book> root = criteriaQuery.from(Book.class);
+            ParameterExpression<String> titleParam = criteriaBuilder.parameter(String.class);
+
+            Predicate titlePre =  criteriaBuilder.equal(root.get("title"), titleParam);
+
+            criteriaQuery.select(root).where(criteriaBuilder.and(titlePre));
+
+            TypedQuery<Book> query = em.createQuery(criteriaQuery);
+            query.setParameter(titleParam,title);
+
+            return query.getSingleResult();
+        }
+    }
+
+    @Override
+    public List<Book> findAll() {
+        try (EntityManager em = getEntityManager()) {
+            TypedQuery<Book> query = em.createNamedQuery("find_all_book", Book.class);
+            return query.getResultList();
+        }
+    }
+
+    @Override
+    public Book findBookByIsbn(String isbn) {
+//        EntityManager em = getEntityManager();
+//
+//        try {
+//            TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class);
+//            query.setParameter("isbn",isbn);
+//            return query.getSingleResult();
+//        }finally {
+//            em.close();
+//        }
+
+        try (EntityManager em = getEntityManager()) {
+            TypedQuery<Book> query = em.createNamedQuery("find_book_by_isbn", Book.class);
+            query.setParameter("isbn",isbn);
+            return query.getSingleResult();
+        }
     }
 
     @Override

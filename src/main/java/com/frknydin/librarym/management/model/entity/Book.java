@@ -1,13 +1,13 @@
 package com.frknydin.librarym.management.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
-
+@NamedQueries({
+        @NamedQuery(name = "find_all_book", query = "FROM Book"),
+        @NamedQuery(name = "find_book_by_isbn", query = "FROM Book b WHERE b.isbn = :isbn")
+})
 @Entity
 public class Book {
 
